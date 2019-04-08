@@ -1,19 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
-import {
-  Table,
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Form,
-  FormGroup,
-  Label,
-  Input
-} from "reactstrap";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Table, Button } from "reactstrap";
 import "../index.css";
 import CategoryEdition from "./categoryEdition";
 import CategoryDetail from "./categoryDetail";
@@ -25,12 +14,14 @@ class categories extends Component {
       categories: [],
       newCategoryData: {
         category: "",
-        description: ""
+        description: "",
+        isexpense: false
       },
       editCategoryData: {
         categoryid: "",
         category: "",
-        description: ""
+        description: "",
+        isexpense: false
       },
       newCategoryModal: false,
       editCategoryModal: false,
@@ -60,16 +51,18 @@ class categories extends Component {
           newCategoryModal: false,
           newCategoryData: {
             category: "",
-            description: ""
+            description: "",
+            isexpense: false
           }
         });
         this.refresData();
       });
   }
 
-  editCategory(categoryid, category, description) {
+  editCategory(categoryid, category, description, isexpense) {
     this.setState({
-      editCategoryData: { categoryid, category, description },
+      editCategoryData: { categoryid, category, description, isexpense },
+
       editCategoryModal: !this.state.editCategoryModal,
       isEditing: true
     });
@@ -88,15 +81,15 @@ class categories extends Component {
   }
 
   UpdateCategory() {
-    console.log(this.state.editCategoryData.categoryid);
-    let { category, description } = this.state.editCategoryData;
+    let { category, description, isexpense } = this.state.editCategoryData;
     axios
       .put(
         "http://localhost:3000/categories/" +
           this.state.editCategoryData.categoryid,
         {
           category,
-          description
+          description,
+          isexpense
         }
       )
       .then(response => {
@@ -137,6 +130,18 @@ class categories extends Component {
     }
   }
 
+  onChangeIsExpense(newValue) {
+    if (!this.state.isEditing) {
+      let { newCategoryData } = this.state;
+      newCategoryData.isexpense = newValue;
+      this.setState({ newCategoryData });
+    } else {
+      let { editCategoryData } = this.state;
+      editCategoryData.isexpense = newValue;
+      this.setState({ editCategoryData });
+    }
+  }
+
   render() {
     let categories = this.state.categories.map(category => {
       return (
@@ -167,6 +172,7 @@ class categories extends Component {
           AddCategory={this.AddCategory.bind(this)}
           onChangeCategory={this.onChangeCategory.bind(this)}
           onChangeDescription={this.onChangeDescription.bind(this)}
+          onChangeIsExpense={this.onChangeIsExpense.bind(this)}
         />
 
         {/*edit category */}
@@ -178,6 +184,7 @@ class categories extends Component {
           AddCategory={this.UpdateCategory.bind(this)}
           onChangeCategory={this.onChangeCategory.bind(this)}
           onChangeDescription={this.onChangeDescription.bind(this)}
+          onChangeIsExpense={this.onChangeIsExpense.bind(this)}
         />
 
         <Table>
@@ -186,6 +193,7 @@ class categories extends Component {
               <th>#</th>
               <th>Category</th>
               <th>Description</th>
+              <th>Type</th>
               <th>Actions</th>
             </tr>
           </thead>

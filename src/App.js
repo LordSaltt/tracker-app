@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Categories from "./components/categories";
+import Home from "./components/home/index.js";
 import { Navbar, NavbarBrand } from "reactstrap";
 import "./index.css";
 
@@ -16,7 +17,7 @@ class App extends Component {
         </Navbar>
 
         <section className="contentManager">
-          <Categories />
+          {/*<Home />*/ <Categories />}
         </section>
       </div>
     );

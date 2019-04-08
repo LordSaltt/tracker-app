@@ -48,4 +48,45 @@
 }
 
 .swichContainer {
+  align-content: center;
+  display: flex;
+}
+
+.customDark {
+  width: 60%;
+  height: 100vh;
+  align-content: center;
+  border-right: 1px;
+  border-color: lightgray;
+  border-right-style: solid;
+}
+
+.customRightAside {
+  width: 40%;
+  height: 100vh;
+}
+
+.mainBody {
+  display: flex;
+}
+
+.customContainer {
+  align-items: center;
+  padding: 10px;
+}
+.customChart {
+  margin: 5px;
+  height: 55vh;
+  align-items: center;
+
+  padding: 10px;
+}
+.customWithChart {
+  width: 100%;
+  margin-left: 7%;
+}
+
+.customNotifications {
+  margin: 5px;
+  height: 40vh;
 }

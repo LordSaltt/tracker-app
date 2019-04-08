@@ -20,8 +20,12 @@ class CategoryDetails extends Component {
     this.state = {};
   }
 
-  editItem(categoryid, category, description) {
-    this.props.editCategory(categoryid, category, description);
+  editItem(categoryid, category, description, isexpense) {
+    this.props.editCategory(categoryid, category, description, isexpense);
+  }
+
+  evalueateType(isexpense) {
+    return isexpense ? "Expense" : "Income";
   }
 
   render() {
@@ -32,6 +36,7 @@ class CategoryDetails extends Component {
         <td>{category.categoryid}</td>
         <td>{category.category}</td>
         <td>{category.description}</td>
+        <td>{this.evalueateType(category.isexpense)}</td>
         <td>
           <div className="customFlex">
             <div className="customToolTip">
@@ -44,7 +49,8 @@ class CategoryDetails extends Component {
                   this,
                   category.categoryid,
                   category.category,
-                  category.description
+                  category.description,
+                  category.isexpense
                 )}
               >
                 <FontAwesomeIcon icon={faEdit} size="1x" />
